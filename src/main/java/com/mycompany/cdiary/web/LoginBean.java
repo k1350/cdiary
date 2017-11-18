@@ -76,13 +76,14 @@ public class LoginBean {
                 
                 externalContext.getSessionMap().put(Constants.USER_KEY, userId);
             } else {
-                getExternalContext().getFlash().put(Constants.ErrTitle_Key, "ログインエラー");
-                getExternalContext().getFlash().put(Constants.ErrMsg_Key, "ログインエラーが発生しました。");
-                return "/error.xhtml?faces-redirect=true";
+                ExternalContext externalContext = getExternalContext();
+                externalContext.getSessionMap().put(Constants.ErrTitle_Key, "ログインエラー");
+                externalContext.getSessionMap().put(Constants.ErrMsg_Key, "ログインエラーが発生しました。");
+                return "/error?faces-redirect=true";
             }
-            return "/user/home.xhtml?faces-redirect=true";
+            return "/user/home?faces-redirect=true";
         } catch (Exception e) {
-            return "/error.xhtml?faces-redirect=true";
+            return "/error?faces-redirect=true";
         }
     }
     

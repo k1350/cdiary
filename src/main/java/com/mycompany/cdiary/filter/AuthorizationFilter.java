@@ -27,7 +27,7 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)req;
         HttpServletResponse response = (HttpServletResponse)res;
         HttpSession session = request.getSession(false);
-        String loginURL = request.getContextPath() + "/index.xhtml";
+        String loginURL = request.getContextPath() + "/login";
         
         boolean loggedIn = (session != null) && (session.getAttribute(Constants.USER_KEY) != null);
         boolean loginRequest = request.getRequestURI().equals(loginURL);

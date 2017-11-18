@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 @Named
 @RequestScoped
@@ -19,13 +20,11 @@ public class MessageBean {
 
     @PostConstruct
     public void init() {
-        try {
-            setErrorTitle(FacesContext.getCurrentInstance().getExternalContext().getFlash().get(Constants.ErrTitle_Key).toString());
-            setErrorMsg(FacesContext.getCurrentInstance().getExternalContext().getFlash().get(Constants.ErrMsg_Key).toString());
-        } catch (Exception e) {
-            setErrorTitle("");
-            setErrorMsg("");
-        }
+        HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        setErrorTitle(session.getAttribute(Constants.ErrTitle_Key).toString());
+        setErrorMsg(session.getAttribute(Constants.ErrMsg_Key).toString());
+        session.removeAttribute(Constants.ErrTitle_Key);
+        session.removeAttribute(Constants.ErrMsg_Key);
     }
 
     public String getErrorTitle() {

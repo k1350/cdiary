@@ -11,7 +11,8 @@
         <ui:composition>
             <p><strong>#{messageBean.errorTitle}</strong>#{messageBean.errorMsg}</p>
            
-            <a href="index.xhtml" onclick="signOut()">トップページへ</a>
+            <h:link value="トップページへ" outcome="index" onclick="signOut()" />
+            
             <script>
                 function onLoad() {
                     gapi.load('auth2', function () {
