@@ -87,26 +87,6 @@ public class LoginBean {
         }
     }
     
-    /**
-     * ログアウト
-     * @return 
-     */
-    public String logout() {
-        try {
-            // セッションを無効にする
-            ExternalContext externalContext = getExternalContext();
-            HttpSession session = (HttpSession)externalContext.getSession(false);
-            if (session != null) {
-                log.info(session.getAttribute(Constants.USER_KEY).toString());
-                externalContext.invalidateSession();
-            }
-            return "/index.xhtml?faces-redirect=true";
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return null;
-        }
-    }
-    
      /**
      * ExternalContextを取得
      * @return ExternalContext
@@ -122,18 +102,5 @@ public class LoginBean {
     public void setId_token(String id_token) {
         this.id_token = id_token;
     }
-    
-    public String getName() {
-        String name = null;
-        try {
-            ExternalContext externalContext = getExternalContext();
-            HttpSession session = (HttpSession)externalContext.getSession(false);
-            if (session != null) {
-               name = this.userLogic.getUserName(session.getAttribute(Constants.USER_KEY).toString());
-            }
-            return name;
-        } catch (Exception e) {
-            return null;
-        }
-    }
+
 }

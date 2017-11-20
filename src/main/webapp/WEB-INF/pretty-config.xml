@@ -13,6 +13,11 @@
         <view-id value="/user/home.xhtml" />
     </url-mapping>
     
+    <url-mapping id="setting">
+        <pattern value="/user/setting" />
+        <view-id value="/user/setting.xhtml" />
+    </url-mapping>
+    
      <url-mapping id="error">
         <pattern value="/error" />
         <view-id value="/error.xhtml" />

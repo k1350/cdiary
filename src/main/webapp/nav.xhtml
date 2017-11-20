@@ -9,7 +9,11 @@
         <ui:composition>
             <div class="menu">
                 <ul>
-                    <li><h:link value="Home" outcome="/user/home" /></li>
+                    <ui:repeat value="#{navBean.pages}" var="page">
+                        <li class="#{view.viewId eq page.viewId ? 'active' : ''}">
+                            <h:link value="#{page.title}" outcome="#{page.viewId}" />
+                        </li>
+                    </ui:repeat>
                 </ul>
             </div>
         </ui:composition> 
