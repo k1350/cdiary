@@ -5,11 +5,100 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
     <h:body>
         <ui:composition>
+            <h:form>
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="c1" value="#{res.c1label}" />
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="c1" value="#{entryInputBean.c1}" >
+                                <f:selectItems value="#{entryInputBean.c1items}" var="c1item"
+                                               itemValue="#{c1item.value}" itemLabel="#{c1item.label}" />
+
+                            </h:selectOneMenu >
+                        </td>
+                        <td>
+                            <h:message for="c1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="c2" value="#{res.c2label}" />
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="c2" value="#{entryInputBean.c2}" >
+                                <f:selectItems value="#{entryInputBean.c2items}" var="c2item"
+                                               itemValue="#{c2item.value}" itemLabel="#{c2item.label}" />
+
+                            </h:selectOneMenu >
+                        </td>
+                        <td>
+                            <h:message for="c2" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="c3" value="#{res.c3label}" />
+                        </td>  
+                        <td>
+                            <h:selectOneMenu id="c3" value="#{entryInputBean.c3}" >
+                                <f:selectItems value="#{entryInputBean.c3items}" var="c3item"
+                                               itemValue="#{c3item.value}" itemLabel="#{c3item.label}" />
+
+                            </h:selectOneMenu >
+                        </td>
+                        <td>
+                            <h:message for="c3" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="rating" value="ラベル" />
+                        </td>
+                        <td>
+                            <fieldset jsf:id="rating" class="rating">
+                                <f:metadata>
+                                    <f:viewParam name="rating" value="#{entryInputBean.rating}" />
+                                </f:metadata>
+                                <input type="radio" jsf:id="star5" pt:name="rating" value="5" />
+                                <h:outputLabel class = "full" for="star5" title="Awesome - 5 stars" />
+                                <input type="radio" jsf:id="star4" pt:name="rating" value="4" />
+                                <h:outputLabel class = "full" for="star4" title="Pretty good - 4 stars" />
+                                <input type="radio" jsf:id="star3" pt:name="rating" value="3">
+                                    <f:passThroughAttribute name="checked" value="true" />
+                                </input>
+                                <h:outputLabel class = "full" for="star3" title="Meh - 3 stars" />
+                                <input type="radio" jsf:id="star2" pt:name="rating" value="2" />
+                                <h:outputLabel class = "full" for="star2" title="Kinda bad - 2 stars" />
+                                <input type="radio" jsf:id="star1" pt:name="rating" value="1" />
+                                <h:outputLabel class = "full" for="star1" title="Sucks big time - 1 star" />
+                            </fieldset>
+                        </td>
+                        <td>
+                            <h:message for="rating" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="note" value="#{res.notelabel}" />
+                        </td>
+                        <td>
+                            <h:inputTextarea id="note" value="#{entryInputBean.note}" rows="3" />
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>
+                <h:commandButton action="#{entryInputBean.register()}" value="#{res.submit}" />
+            </h:form>
 
         </ui:composition>
     </h:body>

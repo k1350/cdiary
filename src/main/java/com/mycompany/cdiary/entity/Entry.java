@@ -8,8 +8,10 @@ package com.mycompany.cdiary.entity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -28,91 +30,90 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Entry.findAll", query = "SELECT e FROM Entry e"),
-    @NamedQuery(name = "Entry.findById", query = "SELECT e FROM Entry e WHERE e.entryPK.id = :id"),
-    @NamedQuery(name = "Entry.findByUserID", query = "SELECT e FROM Entry e WHERE e.entryPK.userID = :userID"),
+    @NamedQuery(name = "Entry.findById", query = "SELECT e FROM Entry e WHERE e.id = :id"),
     @NamedQuery(name = "Entry.findByC1", query = "SELECT e FROM Entry e WHERE e.c1 = :c1"),
     @NamedQuery(name = "Entry.findByC2", query = "SELECT e FROM Entry e WHERE e.c2 = :c2"),
     @NamedQuery(name = "Entry.findByC3", query = "SELECT e FROM Entry e WHERE e.c3 = :c3"),
     @NamedQuery(name = "Entry.findByRating", query = "SELECT e FROM Entry e WHERE e.rating = :rating"),
+    @NamedQuery(name = "Entry.findByImage", query = "SELECT e FROM Entry e WHERE e.image = :image"),
     @NamedQuery(name = "Entry.findByNote", query = "SELECT e FROM Entry e WHERE e.note = :note")})
 public class Entry implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected EntryPK entryPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Long id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "C1")
-    private String c1;
+    private int c1;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "C2")
-    private String c2;
+    private int c2;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "C3")
-    private String c3;
+    private int c3;
     @Basic(optional = false)
     @NotNull
     @Column(name = "Rating")
     private int rating;
+    @Size(max = 300)
+    @Column(name = "Image")
+    private String image;
     @Size(max = 1000)
     @Column(name = "Note")
     private String note;
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID", insertable = false, updatable = false)
+    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
     @ManyToOne(optional = false)
-    private User user;
+    private User userID;
 
     public Entry() {
     }
 
-    public Entry(EntryPK entryPK) {
-        this.entryPK = entryPK;
+    public Entry(Long id) {
+        this.id = id;
     }
 
-    public Entry(EntryPK entryPK, String c1, String c2, String c3, int rating) {
-        this.entryPK = entryPK;
+    public Entry(Long id, int c1, int c2, int c3, int rating) {
+        this.id = id;
         this.c1 = c1;
         this.c2 = c2;
         this.c3 = c3;
         this.rating = rating;
     }
 
-    public Entry(long id, String userID) {
-        this.entryPK = new EntryPK(id, userID);
+    public Long getId() {
+        return id;
     }
 
-    public EntryPK getEntryPK() {
-        return entryPK;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setEntryPK(EntryPK entryPK) {
-        this.entryPK = entryPK;
-    }
-
-    public String getC1() {
+    public int getC1() {
         return c1;
     }
 
-    public void setC1(String c1) {
+    public void setC1(int c1) {
         this.c1 = c1;
     }
 
-    public String getC2() {
+    public int getC2() {
         return c2;
     }
 
-    public void setC2(String c2) {
+    public void setC2(int c2) {
         this.c2 = c2;
     }
 
-    public String getC3() {
+    public int getC3() {
         return c3;
     }
 
-    public void setC3(String c3) {
+    public void setC3(int c3) {
         this.c3 = c3;
     }
 
@@ -124,6 +125,14 @@ public class Entry implements Serializable {
         this.rating = rating;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getNote() {
         return note;
     }
@@ -132,18 +141,18 @@ public class Entry implements Serializable {
         this.note = note;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(User userID) {
+        this.userID = userID;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (entryPK != null ? entryPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -154,7 +163,7 @@ public class Entry implements Serializable {
             return false;
         }
         Entry other = (Entry) object;
-        if ((this.entryPK == null && other.entryPK != null) || (this.entryPK != null && !this.entryPK.equals(other.entryPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -162,7 +171,7 @@ public class Entry implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.cdiary.entiry.Entry[ entryPK=" + entryPK + " ]";
+        return "com.mycompany.cdiary.entity.Entry[ id=" + id + " ]";
     }
     
 }

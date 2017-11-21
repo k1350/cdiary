@@ -1,8 +1,9 @@
 package com.mycompany.cdiary.logic;
 
 import com.mycompany.cdiary.dao.EntryFacade;
+import com.mycompany.cdiary.dao.UserFacade;
 import com.mycompany.cdiary.entity.Entry;
-import com.mycompany.cdiary.entity.EntryPK;
+import com.mycompany.cdiary.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -10,6 +11,9 @@ import javax.ejb.Stateless;
 public class EntryLogic {
     @EJB
     private EntryFacade entryDao;
+    
+    @EJB
+    private UserFacade userDao;
     
     /**
      * エントリーを登録
@@ -23,36 +27,35 @@ public class EntryLogic {
     
     /**
      * エントリーを登録
+     * @param id ID
      * @param userId ユーザーID
-     * @param entryId エントリーID
      * @param c1 選択肢1
      * @param c2 選択肢2
      * @param c3 選択肢3
-     * @param rating 評価
-     * @param note ノート
-     * @return エントリーを登録
+     * @param image 画像保存先パス
+     * @param note コメント
+     * @return 
      */
-    public Entry register(String userId, long entryId, String c1, String c2, String c3, int rating, String note) {
-        Entry entry = new Entry(entryId, userId);
+    public Entry register(long id, String userId, int c1, int c2, int c3, String image, String note) {
+        Entry entry = new Entry();
+        entry.setId(id);
+        User user = this.userDao.find(userId);
+        if (user == null) {
+            return null;
+        }
+        entry.setUserID(user);
         entry.setC1(c1);
         entry.setC2(c2);
         entry.setC3(c3);
-        entry.setRating(rating);
+        if (image != null) {
+            entry.setImage(image);
+        }
         if (note != null) {
             entry.setNote(note);
         }
-        this.entryDao.create(entry);
-        return entry;
+        
+        return register(entry);
     }
     
-    /**
-     * エントリーを検索
-     * @param userId ユーザーID
-     * @param entryId エントリーID
-     * @return エントリー
-     */
-    public Entry find(String userId, long entryId) {
-        EntryPK pk = new EntryPK(entryId, userId);
-        return this.entryDao.find(pk);
-    }
+
 }

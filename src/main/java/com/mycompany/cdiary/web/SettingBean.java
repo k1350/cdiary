@@ -74,8 +74,9 @@ public class SettingBean implements Serializable {
         }
     }
     
-    public void update() {
+    public String update() {
         this.userLogic.update(this.userId, this.name, this.mail);
+        return "/user/setting?faces-redirect=true";
     }
 
     public String getName() {
