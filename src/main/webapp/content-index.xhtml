@@ -9,7 +9,10 @@
     </head>
     <body>
         <ui:composition>
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <main>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </main>
+
             <form jsf:id="form">
                 <input type="text" jsf:value="#{loginBean.id_token}" id="token" style="display:none" />
                 <button jsf:action="#{loginBean.login()}" id="hiddenBtn" style="display:none">submit</button>

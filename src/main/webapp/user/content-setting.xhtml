@@ -12,37 +12,32 @@
     <h:body>
         <ui:composition>
 
-            <h:form>
-                <h:panelGrid columns="3">
-                    <h:outputLabel for="name" value="#{res.name}" />
-                    <h:inputText id="name" value="#{settingBean.name}"
-                                 validator="noBlankSpaceValidator" size="30">
-                        <f:validateRequired />
-                        <f:validateLength maximum="100" minimum="1" />
-                    </h:inputText>
+            <form jsf:id="mainForm">
+                <div>
+                    <label jsf:for="name">#{res.name}</label>
+                    <input jsf:id="name" type="text" size="30" placeholder="#{res.name}"
+                           jsf:value="#{settingBean.name}" />
                     <h:message for="name" />
-                    
-                    <h:outputLabel for="mail" value="#{res.mail}" />
-                    <h:inputText id="mail" value="#{settingBean.mail}" pt:type="email"
-                                 validator="noBlankSpaceValidator" size="30">
-                        <f:validateRequired />
-                        <f:validateLength maximum="300" minimum="1" />
-                    </h:inputText>
+                </div>
+                <div>
+                    <label jsf:for="mail">#{res.mail}</label>
+                    <input jsf:id="mail" type="text" size="30" placeholder="#{res.mail}"
+                           jsf:value="#{settingBean.mail}" />
                     <h:message for="mail" />
-                </h:panelGrid>
-                <h:commandButton value="#{res.change}" action="#{settingBean.update()}" />
-            </h:form>
-        
+                </div>
+                <button jsf:action="#{settingBean.update()}">#{res.change}</button>
+            </form>
+
             <form jsf:id="form">
                 <button jsf:action="#{settingBean.logout()}" id="hiddenBtn" style="display:none"></button>
             </form>
             <button onclick="signOut()">#{res.signOut}</button>
-            
+
             <form jsf:id="form2">
                 <button jsf:action="#{settingBean.invalidAccount()}" id="hiddenDeleteBtn" style="display:none"></button>
             </form>
             <button onclick="deleteAccount()">#{res.deleteAccount}</button>
-            
+
             <script>
                 function signOut() {
                     var auth2 = gapi.auth2.getAuthInstance();
@@ -56,7 +51,7 @@
                     auth2.signOut().then(function () {
                         console.log('User signed out');
                     })
-                    document.getElementById('hiddenDeleteBtn').click(); 
+                    document.getElementById('hiddenDeleteBtn').click();
                 }
             </script>
         </ui:composition>

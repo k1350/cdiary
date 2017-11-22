@@ -6,6 +6,7 @@
 package com.mycompany.cdiary.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,10 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Entry.findAll", query = "SELECT e FROM Entry e"),
     @NamedQuery(name = "Entry.findById", query = "SELECT e FROM Entry e WHERE e.id = :id"),
+    @NamedQuery(name = "Entry.findByDate", query = "SELECT e FROM Entry e WHERE e.date = :date"),
     @NamedQuery(name = "Entry.findByC1", query = "SELECT e FROM Entry e WHERE e.c1 = :c1"),
     @NamedQuery(name = "Entry.findByC2", query = "SELECT e FROM Entry e WHERE e.c2 = :c2"),
     @NamedQuery(name = "Entry.findByC3", query = "SELECT e FROM Entry e WHERE e.c3 = :c3"),
     @NamedQuery(name = "Entry.findByRating", query = "SELECT e FROM Entry e WHERE e.rating = :rating"),
+    @NamedQuery(name = "Entry.findByShop", query = "SELECT e FROM Entry e WHERE e.shop = :shop"),
     @NamedQuery(name = "Entry.findByImage", query = "SELECT e FROM Entry e WHERE e.image = :image"),
     @NamedQuery(name = "Entry.findByNote", query = "SELECT e FROM Entry e WHERE e.note = :note")})
 public class Entry implements Serializable {
@@ -44,6 +49,11 @@ public class Entry implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
     @Basic(optional = false)
     @NotNull
     @Column(name = "C1")
@@ -60,6 +70,9 @@ public class Entry implements Serializable {
     @NotNull
     @Column(name = "Rating")
     private int rating;
+    @Size(max = 100)
+    @Column(name = "Shop")
+    private String shop;
     @Size(max = 300)
     @Column(name = "Image")
     private String image;
@@ -77,8 +90,9 @@ public class Entry implements Serializable {
         this.id = id;
     }
 
-    public Entry(Long id, int c1, int c2, int c3, int rating) {
+    public Entry(Long id, Date date, int c1, int c2, int c3, int rating) {
         this.id = id;
+        this.date = date;
         this.c1 = c1;
         this.c2 = c2;
         this.c3 = c3;
@@ -91,6 +105,14 @@ public class Entry implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getC1() {
@@ -123,6 +145,14 @@ public class Entry implements Serializable {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
     }
 
     public String getImage() {

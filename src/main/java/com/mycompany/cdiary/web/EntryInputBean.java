@@ -3,8 +3,11 @@ package com.mycompany.cdiary.web;
 import com.mycompany.cdiary.constants.Constants;
 import com.mycompany.cdiary.constants.SelectOneMenuItems;
 import com.mycompany.cdiary.logic.EntryLogic;
+import com.mycompany.cdiary.validator.NoBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -15,6 +18,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 
 @Named
 @RequestScoped
@@ -26,10 +30,14 @@ public class EntryInputBean implements Serializable {
     private EntryLogic entryLogic;
     
     private String userId;
+    @NotNull
+    @NoBlank
+    private String date;
     private int c1;
     private int c2;
     private int c3;
     private int rating;
+    private String shop;
     private String image;
     private String note;
     private HttpSession session;
@@ -38,16 +46,21 @@ public class EntryInputBean implements Serializable {
     public void init() {
         this.session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         this.userId = this.session.getAttribute(Constants.USER_KEY).toString();
+        Calendar now = Calendar.getInstance();
+        this.date = now.get(Calendar.YEAR) + "-" + (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.DATE);
         this.c1 = 1;
         this.c2 = 1;
         this.c3 = 1;
         this.rating = 3;
+        this.shop = "";
         this.image = "";
         this.note = "";
     }
     
     public String register() {
         log.info("rating: " + this.rating);
+        log.info(this.date.toString());
+        log.info("c1: " + c1);
         return "/user/home?faces-redirect=true";
     }
     
@@ -109,6 +122,22 @@ public class EntryInputBean implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
     }
     
     

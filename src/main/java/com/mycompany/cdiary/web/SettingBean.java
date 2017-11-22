@@ -3,6 +3,8 @@ package com.mycompany.cdiary.web;
 import com.mycompany.cdiary.constants.Constants;
 import com.mycompany.cdiary.entity.User;
 import com.mycompany.cdiary.logic.UserLogic;
+import com.mycompany.cdiary.validator.CustomEmail;
+import com.mycompany.cdiary.validator.NoBlank;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Size;
 
 @Named
 @SessionScoped
@@ -25,8 +28,16 @@ public class SettingBean implements Serializable {
     private UserLogic userLogic;
     
     private String userId;
+    
+    @NoBlank
+    @Size(min=1, max=100)
     private String name;
+    
+    @NoBlank
+    @Size(min = 1, max = 300)
+    @CustomEmail
     private String mail;
+    
     private User user;
     
     private HttpSession session;
@@ -96,6 +107,10 @@ public class SettingBean implements Serializable {
 
     public void setMail(String mail) {
         if (this.mail != mail) {
+            // すべての全角スペースを削除
+            mail = mail.replaceAll("[　]*", "");
+            // すべての空白文字を削除
+            mail = mail.replaceAll("[\\s]*", "");
             this.mail = mail;
         }
     }

@@ -9,10 +9,11 @@
     </head>
     <body>
         <ui:composition>
-            <p><strong>#{messageBean.errorTitle}</strong>#{messageBean.errorMsg}</p>
-           
-            <h:link value="トップページへ" outcome="index" onclick="signOut()" />
-            
+            <main>
+                <p><strong>#{messageBean.errorTitle}</strong>#{messageBean.errorMsg}</p>
+
+                <h:link value="トップページへ" outcome="index" onclick="signOut()" />
+            </main>
             <script>
                 function onLoad() {
                     gapi.load('auth2', function () {
