@@ -5,4 +5,5 @@ public class Constants {
     public static final String ErrMsg_Key = "errorMsg";
     public static final String ErrTitle_Key = "errorTitle";
     public static final String RES = "myRes";
+    public static final String VIEW_KEY = "view";
 }

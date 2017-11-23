@@ -27,10 +27,13 @@ public class EntryInputBean implements Serializable {
     transient Logger log;
     
     @EJB
+    private SelectOneMenuItems items;
+    
+    @EJB
     private EntryLogic entryLogic;
     
     private String userId;
-    @NotNull
+
     @NoBlank
     private String date;
     private int c1;
@@ -61,19 +64,23 @@ public class EntryInputBean implements Serializable {
         log.info("rating: " + this.rating);
         log.info(this.date.toString());
         log.info("c1: " + c1);
+        Calendar cl = Calendar.getInstance();
+        String[] dl = this.date.split("-");
+        cl.set(Integer.parseInt(dl[0]), Integer.parseInt(dl[1]) - 1, Integer.parseInt(dl[2]));
+        this.entryLogic.register(1, userId, cl.getTime(), c1, c2, c3, rating, shop, image, note);
         return "/user/home?faces-redirect=true";
     }
     
     public List<SelectItem> getC1items() {
-        return SelectOneMenuItems.c1items;
+        return items.getC1items();
     }
     
     public List<SelectItem> getC2items() {
-        return SelectOneMenuItems.c2items;
+        return items.getC2items();
     }
     
     public List<SelectItem> getC3items() {
-        return SelectOneMenuItems.c3items;
+        return items.getC3items();
     }
 
     public int getC1() {

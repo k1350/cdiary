@@ -65,5 +65,13 @@ public class EntryLogic {
         return register(entry);
     }
     
+    /**
+     * エントリーを返す
+     * @param id ID
+     * @return エントリー
+     */
+    public Entry find(long id) {
+        return this.entryDao.find(id);
+    }
 
 }

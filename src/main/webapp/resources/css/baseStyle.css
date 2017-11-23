@@ -6,6 +6,11 @@ body {
     margin: 0;
 }
 
+.display-none {
+    display: none;
+}
+
+/* ナビゲーション */
 .menu ul {
     list-style-type: none;
     margin: 0;

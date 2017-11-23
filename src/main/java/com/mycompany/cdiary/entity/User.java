@@ -51,7 +51,7 @@ public class User implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "Mail")
     private String mail;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
     private Collection<Entry> entryCollection;
 
     public User() {
@@ -122,7 +122,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.cdiary.entiry.User[ userID=" + userID + " ]";
+        return "com.mycompany.cdiary.entity.User[ userID=" + userID + " ]";
     }
     
 }
