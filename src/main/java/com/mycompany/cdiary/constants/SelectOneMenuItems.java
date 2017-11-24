@@ -137,4 +137,27 @@ public class SelectOneMenuItems implements Serializable {
     public List getC3items() {
         return c3items;
     }
+
+    public String getC1item(int id) {
+        if (this.c1map.containsKey(id)) {
+            return this.c1map.get(id);
+        }
+        return "";
+    }
+    
+    public String getC2item(int id) {
+        if (this.c2map.containsKey(id)) {
+            return this.c2map.get(id);
+        }
+        return "";
+    }
+
+    public String getC3item(int id) {
+        if (this.c3map.containsKey(id)) {
+            return this.c3map.get(id);
+        }
+        return "";
+    }
+    
+    
 }
