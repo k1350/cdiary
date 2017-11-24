@@ -22,4 +22,9 @@
         <pattern value="/error" />
         <view-id value="/error.xhtml" />
     </url-mapping>   
+    
+    <url-mapping id="view">
+        <pattern value="/user/view" />
+        <view-id value="/user/view.xhtml" />
+    </url-mapping>   
 </pretty-config>

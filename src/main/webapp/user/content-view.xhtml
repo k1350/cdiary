@@ -12,81 +12,32 @@
     <h:body>
         <ui:composition>
             <main>
-                <div class = #{viewBean.doEdit ? 'display-none' : ''}>
-                    <div>
-                        #{res.datelabel}: 
-                        #{viewBean.year}/#{viewBean.month}/#{viewBean.date}
-                    </div> 
-                    <div>
-                        
-                    </div>
+                <div>
+                    #{res.datelabel}: #{viewBean.year}/#{viewBean.month}/#{viewBean.date}
+                </div> 
+                <div>
+                    #{res.c1label}: #{viewBean.c1Item}
                 </div>
-
-
-                
-                <form jsf:id="form">
-                    <div>
-                        <label jsf:for="date">#{res.datelabel}</label>
-                        <input jsf:id="date" type="date" jsf:value="#{entryInputBean.date}" />
-                        <h:message for="date" />
-                    </div>
-                    <div>
-                        <label jsf:for="c1">#{res.c1label}</label>
-                        <select jsf:id="c1" jsf:value="#{entryInputBean.c1}" size="1">
-                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{entryInputBean.c1items}" />
-                        </select>
-                        <h:message for="c1" />
-                    </div>
-                    <div>
-                        <label jsf:for="c2">#{res.c2label}</label>
-                        <select jsf:id="c2" jsf:value="#{entryInputBean.c2}" size="1">
-                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{entryInputBean.c2items}" />
-                        </select>
-                        <h:message for="c2" />
-                    </div>
-                    <div>
-                        <label jsf:for="c3">#{res.c3label}</label>
-                        <select jsf:id="c3" jsf:value="#{entryInputBean.c3}" size="1">
-                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{entryInputBean.c3items}" />
-                        </select>
-                        <h:message for="c3" />
-                    </div>
-                    <div>
-                        <label jsf:for="rating" >#{res.ratinglabel}</label>
-                        <div>
-                            <fieldset jsf:id="rating" class="rating">
-                                <f:metadata>
-                                    <f:viewParam name="rating" value="#{entryInputBean.rating}" />
-                                </f:metadata>
-                                <input type="radio" jsf:id="star5" pt:name="rating" value="5" />
-                                <label class = "full" jsf:for="star5" title="Awesome - 5 stars" />
-                                <input type="radio" jsf:id="star4" pt:name="rating" value="4" />
-                                <label class = "full" jsf:for="star4" title="Pretty good - 4 stars" />
-                                <input type="radio" jsf:id="star3" pt:name="rating" value="3">
-                                    <f:passThroughAttribute name="checked" value="true" />
-                                </input>
-                                <label class = "full" jsf:for="star3" title="Meh - 3 stars" />
-                                <input type="radio" jsf:id="star2" pt:name="rating" value="2" />
-                                <label class = "full" jsf:for="star2" title="Kinda bad - 2 stars" />
-                                <input type="radio" jsf:id="star1" pt:name="rating" value="1" />
-                                <label class = "full" jsf:for="star1" title="Sucks big time - 1 star" />
-                            </fieldset>
-                            <div style="clear:both;" />
-                        </div>
-                        <h:message for="rating"  />
-                    </div>
-                    <div>
-                        <label jsf:for="shop">#{res.shoplabel}</label>
-                        <input jsf:id="shop" type="text" jsf:value="#{entryInputBean.shop}" />
-                        <h:message for="shop" />
-                    </div>
-                    <div>
-                        <label jsf:for="note">#{res.notelabel}</label>
-                        <textarea jsf:id="note" jsf:value="#{entryInputBean.note}" rows="3" />
-                        <h:message for="note" />
-                    </div>
-                    <button jsf:action="#{entryInputBean.register()}">#{res.submit}</button>
-                </form>
+                <div>
+                    #{res.c2label}: #{viewBean.c2Item}
+                </div>
+                <div>
+                    #{res.c3label}: #{viewBean.c3Item}
+                </div>
+                <div>
+                    #{res.ratinglabel}: 
+                    <span class="rated"><i class="fa fa-coffee" aria-hidden="true"></i></span>
+                    <span class="#{2 le viewBean.rating ? 'rated' : 'non-rated'}"><i class="fa fa-coffee" aria-hidden="true"></i></span>
+                    <span class="#{3 le viewBean.rating ? 'rated' : 'non-rated'}"><i class="fa fa-coffee" aria-hidden="true"></i></span>
+                    <span class="#{4 le viewBean.rating ? 'rated' : 'non-rated'}"><i class="fa fa-coffee" aria-hidden="true"></i></span>
+                    <span class="#{5 le viewBean.rating ? 'rated' : 'non-rated'}"><i class="fa fa-coffee" aria-hidden="true"></i></span>
+                </div>
+                <div>
+                    #{res.shoplabel}: #{viewBean.shop}
+                </div>
+                <div>
+                    #{res.notelabel}: #{viewBean.note}
+                </div>
             </main>
         </ui:composition>
     </h:body>
