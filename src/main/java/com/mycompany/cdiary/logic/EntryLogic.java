@@ -5,6 +5,7 @@ import com.mycompany.cdiary.dao.UserFacade;
 import com.mycompany.cdiary.entity.Entry;
 import com.mycompany.cdiary.entity.User;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -73,5 +74,31 @@ public class EntryLogic {
     public Entry find(long id) {
         return this.entryDao.find(id);
     }
+    
+    /**
+     * 全エントリーを返す
+     * @return 全エントリー
+     */
+    public List<Entry> findAll() {
+        return this.entryDao.findAll();
+    }
 
+    /**
+     * エントリーを更新する
+     * @param entry エントリー
+     * @return エントリー
+     */
+    public Entry update(Entry entry) {
+        long id = entry.getId();
+        this.entryDao.edit(entry);
+        return find(id);
+    }
+    
+    /**
+     * エントリーを削除する
+     * @param id ID
+     */
+    public void delete(long id) {
+        this.entryDao.remove(find(id));
+    }
 }

@@ -27,4 +27,13 @@
         <pattern value="/user/view" />
         <view-id value="/user/view.xhtml" />
     </url-mapping>   
+    <url-mapping id="edit">
+        <pattern value="/user/edit" />
+        <view-id value="/user/edit.xhtml" />
+    </url-mapping>  
+    
+    <url-mapping id="search">
+        <pattern value="/user/search" />
+        <view-id value="/user/search.xhtml" />
+    </url-mapping>  
 </pretty-config>

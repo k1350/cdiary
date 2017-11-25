@@ -38,6 +38,11 @@
                 <div>
                     #{res.notelabel}: #{viewBean.note}
                 </div>
+                <a href="search.xhtml">戻る</a>
+                <form jsf:id="form">
+                    <button jsf:action="#{viewBean.delete()}">#{res.delete}</button>
+                    <button jsf:action="#{viewBean.edit()}">#{res.edit}</button>
+                </form>
             </main>
         </ui:composition>
     </h:body>

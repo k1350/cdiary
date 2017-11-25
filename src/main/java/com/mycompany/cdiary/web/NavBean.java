@@ -12,6 +12,7 @@ public class NavBean implements Serializable {
     public List<Page> getPages() {
         List<Page> pages = new ArrayList<Page>();
         pages.add(new Page("/user/home.xhtml", "Home", "/user/home"));
+        pages.add(new Page("/user/search.xhtml", "Search", "/user/search"));
         pages.add(new Page("/user/setting.xhtml", "Setting", "/user/setting"));
         return pages;
     }

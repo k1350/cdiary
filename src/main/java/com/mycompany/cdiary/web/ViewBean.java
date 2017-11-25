@@ -44,22 +44,20 @@ public class ViewBean implements Serializable {
     private String note;
     private HttpSession session;
     
+    private long id;
+    
     @PostConstruct
     public void init() {
         this.session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         this.userId = this.session.getAttribute(Constants.USER_KEY).toString();
         
-        // デバッグ用
-        Entry entry = this.entryLogic.find(2);
-        /*
-        long id = (long)this.session.getAttribute(Constants.VIEW_KEY);
-        this.session.removeAttribute(Constants.VIEW_KEY);
-        Entry entry = this.entryLogic.find(id);
+        this.id = (long)this.session.getAttribute(Constants.VIEW_KEY);
+        Entry entry = this.entryLogic.find(this.id);
         if (entry == null) {
             // 例外を投げる
              
         }
-        */
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(entry.getDate());
         this.year = String.valueOf(cal.get(Calendar.YEAR));
@@ -74,6 +72,15 @@ public class ViewBean implements Serializable {
         this.image = entry.getImage();
         this.note = entry.getNote();
 
+    }
+    
+    public String edit() {
+        return "/user/edit?faces-redirect=true";
+    }
+    
+    public String delete() {
+        this.entryLogic.delete(this.id);
+        return "/user/home?faces-redirect=true";
     }
 
     public String getYear() {
