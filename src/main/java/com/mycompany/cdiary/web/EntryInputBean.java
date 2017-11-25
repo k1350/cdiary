@@ -3,6 +3,7 @@ package com.mycompany.cdiary.web;
 import com.mycompany.cdiary.constants.Constants;
 import com.mycompany.cdiary.constants.SelectOneMenuItems;
 import com.mycompany.cdiary.logic.EntryLogic;
+import com.mycompany.cdiary.util.CalendarUtil;
 import com.mycompany.cdiary.validator.NoBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class EntryInputBean implements Serializable {
         this.session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         this.userId = this.session.getAttribute(Constants.USER_KEY).toString();
         Calendar now = Calendar.getInstance();
-        this.date = now.get(Calendar.YEAR) + "-" + (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.DATE);
+        this.date = CalendarUtil.getString(now);
         this.c1 = 1;
         this.c2 = 1;
         this.c3 = 1;
@@ -64,9 +65,7 @@ public class EntryInputBean implements Serializable {
         log.info("rating: " + this.rating);
         log.info(this.date.toString());
         log.info("c1: " + c1);
-        Calendar cl = Calendar.getInstance();
-        String[] dl = this.date.split("-");
-        cl.set(Integer.parseInt(dl[0]), Integer.parseInt(dl[1]) - 1, Integer.parseInt(dl[2]));
+        Calendar cl = CalendarUtil.parseCalendar(this.date);
         this.entryLogic.register(1, userId, cl.getTime(), c1, c2, c3, rating, shop, image, note);
         return "/user/home?faces-redirect=true";
     }
