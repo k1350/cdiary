@@ -11,7 +11,61 @@
     </h:head>
     <h:body>
         <ui:composition>
-
+            <main>
+                <form jsf:id="mainForm">
+                    <div>
+                        <label jsf:for="startDate">#{res.startdate}</label>
+                        <input jsf:id="startDate" type="date" jsf:value="#{searchBean.startDate}" />
+                        <h:message for="startDate" />
+                    </div>
+                    <div>
+                        <label jsf:for="endDate">#{res.enddate}</label>
+                        <input jsf:id="endDate" type="date" jsf:value="#{searchBean.endDate}" />
+                        <h:message for="endDate" />
+                    </div>
+                    <div>
+                        <label jsf:for="c1">#{res.c1label}</label>
+                        <select jsf:id="c1" jsf:value="#{searchBean.c1}" size="1">
+                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{searchBean.c1items}" />
+                        </select>
+                    </div>
+                    <div>
+                        <label jsf:for="c2">#{res.c2label}</label>
+                        <select jsf:id="c2" jsf:value="#{searchBean.c2}" size="1">
+                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{searchBean.c2items}" />
+                        </select>
+                    </div>
+                    <div>
+                        <label jsf:for="c3">#{res.c3label}</label>
+                        <select jsf:id="c3" jsf:value="#{searchBean.c3}" size="1">
+                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{searchBean.c3items}" />
+                        </select>
+                    </div>
+                    <div>
+                        <label jsf:for="rating" >#{res.ratinglabel}</label>
+                        <h:selectOneRadio id="rating" value="#{searchBean.rating}">
+                            <f:selectItem id="star4" itemValue="4" itemLabel="#{res.up4}"/>
+                            <f:selectItem id="star3" itemValue="3" itemLabel="#{res.up3}"/>
+                            <f:selectItem id="star2" itemValue="2" itemLabel="#{res.up2}"/>
+                            <f:selectItem id="star1" itemValue="1" itemLabel="#{res.up1}"/>
+                        </h:selectOneRadio>
+                    </div>
+                    <div>
+                        <label jsf:for="shop">#{res.shoplabel}</label>
+                        <input jsf:id="shop" type="text" jsf:value="#{searchBean.shop}" />
+                        <h:message for="shop" />
+                    </div>
+                    <div>
+                        <label jsf:for="note">#{res.notelabel}</label>
+                        <textarea jsf:id="note" jsf:value="#{searchBean.note}" rows="3" />
+                        <h:message for="note" />
+                    </div>
+                    <button jsf:action="#{searchBean.search()}">
+                        #{res.search}
+                    </button>
+                </form>
+            </main>
+            
             <form jsf:id="form">
                 <button jsf:action="#{searchBean.mock()}">表示</button>
             </form>
