@@ -67,7 +67,37 @@
             </main>
             
             <form jsf:id="form">
-                <button jsf:action="#{searchBean.mock()}">表示</button>
+                <h:dataTable id="dataTable" value="#{searchBean.displayEntries}" var="m" class="cursor-pointer">
+                    <h:column>
+                        <f:facet name="header">#{res.datelabel}</f:facet>
+                        <h:outputText value="#{m.date}">
+                            <f:convertDateTime pattern="yyyy/MM/dd" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{res.c1label}</f:facet>
+                        #{m.c1}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{res.c2label}</f:facet>
+                        #{m.c2}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{res.c3label}</f:facet>
+                        #{m.c3}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{res.ratinglabel}</f:facet>
+                        <i class="fa fa-coffee" />#{m.rating}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{res.shoplabel}</f:facet>
+                        #{m.shop}
+                    </h:column>
+                </h:dataTable>
+                #{searchBean.searchMessage}
+                <input type="hidden" name="rowIndex" jsf:value="#{searchBean.rowIndex}"/>
+                <button jsf:id="hiddenBtn" jsf:action="#{searchBean.view()}" style="display: none" />
             </form>
 
         </ui:composition>

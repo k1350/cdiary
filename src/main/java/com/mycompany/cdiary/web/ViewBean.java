@@ -80,7 +80,7 @@ public class ViewBean implements Serializable {
     
     public String delete() {
         this.entryLogic.delete(this.id);
-        return "/user/home?faces-redirect=true";
+        return "/user/search?faces-redirect=true";
     }
 
     public String getYear() {
