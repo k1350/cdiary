@@ -79,6 +79,8 @@ public class CalendarUtil {
         if (cal == null) {
             return null;
         }
-        return cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE);
+        return String.format("%02d", cal.get(Calendar.YEAR)) + "-" 
+                + String.format("%02d", cal.get(Calendar.MONTH) + 1)
+                + "-" + String.format("%02d", cal.get(Calendar.DATE));
     }
 }

@@ -10,6 +10,10 @@ body {
     display: none;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 /* ナビゲーション */
 .menu ul {
     list-style-type: none;

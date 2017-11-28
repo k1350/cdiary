@@ -5,12 +5,14 @@ import com.mycompany.cdiary.constants.SelectOneMenuItems;
 import com.mycompany.cdiary.entity.Entry;
 import com.mycompany.cdiary.logic.EntryLogic;
 import com.mycompany.cdiary.util.CalendarUtil;
+import com.mycompany.cdiary.util.Messages;
 import com.mycompany.cdiary.validator.NoBlank;
 import com.mycompany.cdiary.validator.ValidDate;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -53,24 +55,28 @@ public class SearchBean implements Serializable {
     @Size(max=1000)
     private String note;
     
-    private List<Entry> entries;
-    
     private List<SelectItem> c1items;
     private List<SelectItem> c2items;
     private List<SelectItem> c3items;
+    
+    private List<DisplayEntry> displayEntries;
+    
+    private int rowIndex;
     
     @PostConstruct
     public void init() {
         this.session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         this.userId = this.session.getAttribute(Constants.USER_KEY).toString();
         Calendar cal = Calendar.getInstance();
-        this.startDate = CalendarUtil.getString(cal);
+        Calendar one = Calendar.getInstance();
+        one.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
+        this.startDate = CalendarUtil.getString(one);
         this.endDate = CalendarUtil.getString(cal);
         
         this.c1 = 0;
         this.c2 = 0;
         this.c3 = 0;
-        this.rating = 3;
+        this.rating = 1;
         this.shop = "";
         this.image = "";
         this.note = "";
@@ -92,26 +98,23 @@ public class SearchBean implements Serializable {
         for (Object item : items.getC3items()) {
             this.c3items.add((SelectItem)item);
         }        
+        
+        this.displayEntries = new ArrayList<>();
+        innerSearch();
     }
     
     public String search() {
-        log.info(this.startDate);
-        log.info(this.endDate);
-        log.info(String.valueOf(this.c1));
-        log.info(String.valueOf(this.c2));
-        log.info(String.valueOf(this.c3));
-        log.info(String.valueOf(this.rating));
-        log.info(this.shop);
-        log.info(this.note);
+        innerSearch();
         return "";
     }
     
-    public String mock() {
-        List<Entry> entries = this.entryLogic.findAll();
-        if (entries.size() == 0) {
-            return "/user/home?faces-redirect=true";
+    public String view() {
+        long viewId = this.displayEntries.get(rowIndex).getId();
+        Entry entry = this.entryLogic.find(viewId);
+        if (entry == null) {
+            return "";
         }
-        this.session.setAttribute(Constants.VIEW_KEY, entries.get(0).getId());
+        this.session.setAttribute(Constants.VIEW_KEY, viewId);
         return "/user/view?faces-redirect=true";
     }
 
@@ -178,10 +181,7 @@ public class SearchBean implements Serializable {
     public void setNote(String note) {
         this.note = note;
     }
-    
-    public List<Entry> getEntries() {
-        return this.entries;
-    }
+   
     
     public List<SelectItem> getC1items() {
         return this.c3items;
@@ -193,5 +193,40 @@ public class SearchBean implements Serializable {
     
     public List<SelectItem> getC3items() {
         return this.c3items;
+    }
+    
+    public List<DisplayEntry> getDisplayEntries() {
+        return this.displayEntries;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public void setRowIndex(int rowIndex) {
+        this.rowIndex = rowIndex;
+    }
+    
+    public String getSearchMessage() {
+        if (this.displayEntries.size() == 0) {
+            return Messages.getString("myRes", "searchMessage", null);
+        }
+        return "";
+    }
+    
+    private void innerSearch() {
+        this.displayEntries.clear();
+        List<Entry> entries = this.entryLogic.search(userId, CalendarUtil.parseDate(startDate), CalendarUtil.parseDate(endDate), c1, c2, c3, rating, shop, note);
+        for (Entry entry : entries) {
+            DisplayEntry de = new DisplayEntry();
+            de.setId(entry.getId());
+            de.setDate(entry.getDate());
+            de.setC1(this.items.getC1item(entry.getC1()));
+            de.setC2(this.items.getC2item(entry.getC2()));
+            de.setC3(this.items.getC3item(entry.getC3()));
+            de.setRating(String.valueOf(entry.getRating()));
+            de.setShop(entry.getShop());
+            this.displayEntries.add(de);
+        }
     }
 }

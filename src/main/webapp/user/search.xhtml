@@ -10,6 +10,12 @@
     </h:head>
     <h:body>
         <ui:composition template="/templates/template01.xhtml">
+            <ui:define name="head">
+                <h:outputScript library="javascript" name="selectRow.js" />
+                <script>
+                    window.onload = addOnclickToDatatableRows;
+                </script>
+            </ui:define>
             <ui:define name="title">Search</ui:define>
             <ui:define name="content">
                 <ui:include src="content-search.xhtml" />

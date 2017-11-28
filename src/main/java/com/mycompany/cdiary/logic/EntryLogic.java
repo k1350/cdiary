@@ -101,4 +101,33 @@ public class EntryLogic {
     public void delete(long id) {
         this.entryDao.remove(find(id));
     }
+    
+    /**
+     * 検索
+     * @param userId ユーザーID
+     * @param startDate 開始日
+     * @param endDate 終了日
+     * @param c1 選択肢1
+     * @param c2 選択肢2
+     * @param c3 選択肢3
+     * @param rating 評価
+     * @param shop 店
+     * @param note コメント
+     * @return 検索結果
+     */
+    public List<Entry> search(String userId, Date startDate, Date endDate, int c1, int c2, int c3, int rating, String shop, String note) {
+        User user = this.userDao.find(userId);
+        if (user == null) {
+            return null;
+        }
+        String s = null;
+        if (shop != null && !shop.isEmpty()) {
+            s = "%" + shop + "%";
+        }
+        String n = null;
+        if (n != null && !n.isEmpty()) {
+            n = "%" + n + "%";
+        }
+        return this.entryDao.search(user, startDate, endDate, c1, c2, c3, rating, s, n);
+    }
 }
