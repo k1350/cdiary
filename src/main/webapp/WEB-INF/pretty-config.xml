@@ -36,4 +36,9 @@
         <pattern value="/user/search" />
         <view-id value="/user/search.xhtml" />
     </url-mapping>  
+    
+    <url-mapping id="summary">
+        <pattern value="/user/summary" />
+        <view-id value="/user/summary.xhtml" />
+    </url-mapping>
 </pretty-config>
