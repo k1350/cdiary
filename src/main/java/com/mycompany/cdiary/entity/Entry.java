@@ -5,6 +5,7 @@
  */
 package com.mycompany.cdiary.entity;
 
+import com.mycompany.cdiary.constants.Constants;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -41,7 +42,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Entry.findByRating", query = "SELECT e FROM Entry e WHERE e.rating = :rating"),
     @NamedQuery(name = "Entry.findByShop", query = "SELECT e FROM Entry e WHERE e.shop = :shop"),
     @NamedQuery(name = "Entry.findByImage", query = "SELECT e FROM Entry e WHERE e.image = :image"),
-    @NamedQuery(name = "Entry.findByNote", query = "SELECT e FROM Entry e WHERE e.note = :note")})
+    @NamedQuery(name = "Entry.findByNote", query = "SELECT e FROM Entry e WHERE e.note = :note"),
+    @NamedQuery(name = Constants.ENTRY_C1, query = "SELECT e FROM Entry e WHERE e.userID = :userID AND e.date BETWEEN :startDate and :endDate AND e.c1 = :c1"),
+    @NamedQuery(name = Constants.ENTRY_C2, query = "SELECT e FROM Entry e WHERE e.userID = :userID AND e.date BETWEEN :startDate and :endDate AND e.c2 = :c2"),
+    @NamedQuery(name = Constants.ENTRY_C3, query = "SELECT e FROM Entry e WHERE e.userID = :userID AND e.date BETWEEN :startDate and :endDate AND e.c3 = :c3")
+})
 public class Entry implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

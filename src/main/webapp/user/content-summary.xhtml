@@ -11,8 +11,23 @@
     </h:head>
     <h:body>
         <ui:composition>
+            <form jsf:id="form">
+                <div>
+                    <label for="startDate">#{res.startdate}</label>
+                    <input type="date" id="startDate" jsf:value="#{summaryBean.startDate}" />
+                </div>
+                <div>
+                    <label for="endDate">#{res.enddate}</label>
+                    <input type="date" id="endDate" jsf:value="#{summaryBean.endDate}" />
+                </div>
+                <button jsf:action="#{summaryBean.update()}">
+                        #{res.search}
+                </button>
+            </form>
            <!--Div that will hold the pie chart-->
-           <div id="chart_div"></div>
+           <div id="chart1" style="width: 100%; max-height: 350px;"></div>
+           <div id="chart2" style="width: 100%; max-height: 350px;"></div>
+           <div id="chart3" style="width: 100%; max-height: 350px;"></div>
         </ui:composition>
     </h:body>
 </html>
