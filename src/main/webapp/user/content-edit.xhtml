@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition>
+            <main>
+                <form jsf:id="form">
+                    <div>
+                        <label jsf:for="date">#{res.datelabel}</label>
+                        <input jsf:id="date" type="date" jsf:value="#{editBean.date}" />
+                        <h:message for="date" />
+                    </div>
+                    <div>
+                        <label jsf:for="c1">#{res.c1label}</label>
+                        <select jsf:id="c1" jsf:value="#{editBean.c1}" size="1">
+                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{editBean.c1items}" />
+                        </select>
+                        <h:message for="c1" />
+                    </div>
+                    <div>
+                        <label jsf:for="c2">#{res.c2label}</label>
+                        <select jsf:id="c2" jsf:value="#{editBean.c2}" size="1">
+                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{editBean.c2items}" />
+                        </select>
+                        <h:message for="c2" />
+                    </div>
+                    <div>
+                        <label jsf:for="c3">#{res.c3label}</label>
+                        <select jsf:id="c3" jsf:value="#{editBean.c3}" size="1">
+                            <option pt:custom-data="items" jsfc="f:selectItems" value="#{editBean.c3items}" />
+                        </select>
+                        <h:message for="c3" />
+                    </div>
+                    <div>
+                        <label jsf:for="rating" >#{res.ratinglabel}</label>
+                        <div>
+                            <fieldset jsf:id="rating" class="rating">
+                                <f:metadata>
+                                    <f:viewParam name="rating" value="#{editBean.rating}" />
+                                </f:metadata>
+                                <input type="radio" jsf:id="star5" pt:name="rating" value="5" />
+                                <label class = "full" jsf:for="star5" title="Awesome - 5 stars" />
+                                <input type="radio" jsf:id="star4" pt:name="rating" value="4" />
+                                <label class = "full" jsf:for="star4" title="Pretty good - 4 stars" />
+                                <input type="radio" jsf:id="star3" pt:name="rating" value="3">
+                                    <f:passThroughAttribute name="checked" value="true" />
+                                </input>
+                                <label class = "full" jsf:for="star3" title="Meh - 3 stars" />
+                                <input type="radio" jsf:id="star2" pt:name="rating" value="2" />
+                                <label class = "full" jsf:for="star2" title="Kinda bad - 2 stars" />
+                                <input type="radio" jsf:id="star1" pt:name="rating" value="1" />
+                                <label class = "full" jsf:for="star1" title="Sucks big time - 1 star" />
+                            </fieldset>
+                            <div style="clear:both;" />
+                        </div>
+                        <h:message for="rating"  />
+                    </div>
+                    <div>
+                        <label jsf:for="shop">#{res.shoplabel}</label>
+                        <input jsf:id="shop" type="text" jsf:value="#{editBean.shop}" />
+                        <h:message for="shop" />
+                    </div>
+                    <div>
+                        <label jsf:for="note">#{res.notelabel}</label>
+                        <textarea jsf:id="note" jsf:value="#{editBean.note}" rows="3" />
+                        <h:message for="note" />
+                    </div>
+                    <button jsf:action="#{editBean.cancel()}" jsf:immediate="true">#{res.cancel}</button>
+                    <button jsf:action="#{editBean.update()}">#{res.submit}</button>
+                </form>
+            </main>
+        </ui:composition>
+    </h:body>
+</html>
+

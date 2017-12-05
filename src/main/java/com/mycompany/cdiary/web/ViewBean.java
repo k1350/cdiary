@@ -1,6 +1,7 @@
 package com.mycompany.cdiary.web;
 
 import com.mycompany.cdiary.constants.Constants;
+import com.mycompany.cdiary.constants.SelectOneMenuItems;
 import com.mycompany.cdiary.entity.Entry;
 import com.mycompany.cdiary.logic.EntryLogic;
 import com.mycompany.cdiary.validator.NoBlank;
@@ -25,15 +26,15 @@ public class ViewBean implements Serializable {
     @EJB
     private EntryLogic entryLogic;
     
+    @EJB
+    private SelectOneMenuItems somi;
+    
     private String userId;
 
     @NoBlank
     private String year;
     private String month;
     private String date;
-    private int c1;
-    private int c2;
-    private int c3;
     private String c1Item;
     private String c2Item;
     private String c3Item;
@@ -42,35 +43,44 @@ public class ViewBean implements Serializable {
     private String image;
     private String note;
     private HttpSession session;
-    private boolean doEdit;
+    
+    private long id;
     
     @PostConstruct
     public void init() {
         this.session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         this.userId = this.session.getAttribute(Constants.USER_KEY).toString();
-        long id = (long)this.session.getAttribute(Constants.VIEW_KEY);
-        this.session.removeAttribute(Constants.VIEW_KEY);
         
-        Entry entry = this.entryLogic.find(id);
+        this.id = (long)this.session.getAttribute(Constants.VIEW_KEY);
+        Entry entry = this.entryLogic.find(this.id);
         if (entry == null) {
             // 例外を投げる
+             
         }
-        
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(entry.getDate());
         this.year = String.valueOf(cal.get(Calendar.YEAR));
         this.month = String.valueOf(cal.get(Calendar.MONTH) + 1);
         this.date = String.valueOf(cal.get(Calendar.DATE));
         
-        this.c1 = entry.getC1();
-        this.c2 = entry.getC2();
-        this.c3 = entry.getC3();
+        this.c1Item = this.somi.getC1item(entry.getC1());
+        this.c2Item = this.somi.getC2item(entry.getC2());
+        this.c3Item = this.somi.getC3item(entry.getC3());
         this.rating = entry.getRating();
         this.shop = entry.getShop();
         this.image = entry.getImage();
         this.note = entry.getNote();
-        
-        this.doEdit = false;
+
+    }
+    
+    public String edit() {
+        return "/user/edit?faces-redirect=true";
+    }
+    
+    public String delete() {
+        this.entryLogic.delete(this.id);
+        return "/user/search?faces-redirect=true";
     }
 
     public String getYear() {
@@ -83,18 +93,6 @@ public class ViewBean implements Serializable {
 
     public String getDate() {
         return date;
-    }
-
-    public int getC1() {
-        return c1;
-    }
-
-    public int getC2() {
-        return c2;
-    }
-
-    public int getC3() {
-        return c3;
     }
 
     public int getRating() {
@@ -112,8 +110,18 @@ public class ViewBean implements Serializable {
     public String getNote() {
         return note;
     }
-    
-    public boolean getDoEdit() {
-        return this.doEdit;
+
+    public String getC1Item() {
+        return c1Item;
     }
+
+    public String getC2Item() {
+        return c2Item;
+    }
+
+    public String getC3Item() {
+        return c3Item;
+    }
+    
+
 }

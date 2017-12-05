@@ -22,4 +22,23 @@
         <pattern value="/error" />
         <view-id value="/error.xhtml" />
     </url-mapping>   
+    
+    <url-mapping id="view">
+        <pattern value="/user/view" />
+        <view-id value="/user/view.xhtml" />
+    </url-mapping>   
+    <url-mapping id="edit">
+        <pattern value="/user/edit" />
+        <view-id value="/user/edit.xhtml" />
+    </url-mapping>  
+    
+    <url-mapping id="search">
+        <pattern value="/user/search" />
+        <view-id value="/user/search.xhtml" />
+    </url-mapping>  
+    
+    <url-mapping id="summary">
+        <pattern value="/user/summary" />
+        <view-id value="/user/summary.xhtml" />
+    </url-mapping>
 </pretty-config>
