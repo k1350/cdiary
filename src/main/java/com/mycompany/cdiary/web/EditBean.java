@@ -4,6 +4,7 @@ import com.mycompany.cdiary.constants.Constants;
 import com.mycompany.cdiary.constants.SelectOneMenuItems;
 import com.mycompany.cdiary.entity.Entry;
 import com.mycompany.cdiary.logic.EntryLogic;
+import com.mycompany.cdiary.util.CalendarUtil;
 import com.mycompany.cdiary.validator.NoBlank;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -65,7 +66,7 @@ public class EditBean implements Serializable {
         
         Calendar cal = Calendar.getInstance();
         cal.setTime(this.entry.getDate());
-        this.date = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE);
+        this.date = CalendarUtil.getString(cal);
         this.c1 = this.entry.getC1();
         this.c2 = this.entry.getC2();
         this.c3 = this.entry.getC3();
@@ -76,10 +77,7 @@ public class EditBean implements Serializable {
     }
     
     public String update() {
-        Calendar cl = Calendar.getInstance();
-        String[] dl = this.date.split("-");
-        cl.set(Integer.parseInt(dl[0]), Integer.parseInt(dl[1]) - 1, Integer.parseInt(dl[2]));
-        this.entry.setDate(cl.getTime());
+        this.entry.setDate(CalendarUtil.parseDate(date));
         this.entry.setC1(c1);
         this.entry.setC2(c2);
         this.entry.setC3(c3);

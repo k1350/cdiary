@@ -5,6 +5,7 @@
  */
 package com.mycompany.cdiary.dao;
 
+import com.mycompany.cdiary.constants.Constants;
 import com.mycompany.cdiary.entity.Entry;
 import com.mycompany.cdiary.entity.User;
 import java.util.ArrayList;
@@ -91,6 +92,72 @@ public class EntryFacade extends AbstractFacade<Entry> {
             return result;
         } catch (Exception e) {
             
+            return new ArrayList<Entry>();
+        }
+    }
+    
+     /**
+     * 選択肢1で検索
+     * @param userID ユーザー
+     * @param startDate 開始日
+     * @param endDate 終了日
+     * @param c1 選択肢1
+     * @return 検索結果
+     */
+    public List<Entry> searchC1(User userID, Date startDate, Date endDate, int c1) {
+        try {
+            TypedQuery<Entry> query = this.em.createNamedQuery(Constants.ENTRY_C1, Entry.class);
+            query.setParameter("userID", userID);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            query.setParameter("c1", c1);
+            List<Entry> result = query.getResultList();
+            return result;
+        } catch (Exception e) {
+            return new ArrayList<Entry>();
+        }
+    }
+    
+    /**
+     * 選択肢2で検索
+     * @param userID ユーザー
+     * @param startDate 開始日
+     * @param endDate 終了日
+     * @param c2 選択肢1
+     * @return 検索結果
+     */
+    public List<Entry> searchC2(User userID, Date startDate, Date endDate, int c2) {
+        try {
+            TypedQuery<Entry> query = this.em.createNamedQuery(Constants.ENTRY_C2, Entry.class);
+            query.setParameter("userID", userID);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            query.setParameter("c2", c2);
+            List<Entry> result = query.getResultList();
+            return result;
+        } catch (Exception e) {
+            return new ArrayList<Entry>();
+        }
+    }
+    
+    /**
+     * 選択肢3で検索
+     * @param userID ユーザー
+     * @param startDate 開始日
+     * @param endDate 終了日
+     * @param c3 選択肢3
+     * @return 検索結果
+     */
+    public List<Entry> searchC3(User userID, Date startDate, Date endDate, int c3) {
+        try {
+            TypedQuery<Entry> query = this.em.createNamedQuery(Constants.ENTRY_C3, Entry.class);
+            query.setParameter("userID", userID);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            query.setParameter("c3", c3);
+            List<Entry> result = query.getResultList();
+            return result;
+        } catch (Exception e) {
             return new ArrayList<Entry>();
         }
     }
