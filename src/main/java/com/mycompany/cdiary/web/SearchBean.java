@@ -184,7 +184,7 @@ public class SearchBean implements Serializable {
    
     
     public List<SelectItem> getC1items() {
-        return this.c3items;
+        return this.c1items;
     }
     
     public List<SelectItem> getC2items() {
